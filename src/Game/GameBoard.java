@@ -53,7 +53,6 @@ public class GameBoard extends JFrame {
     void emptyField() {
         for (int i = 0; i < (dimension * dimension); i++) {
             gameButtons[i].setText("");
-
             int x = i / GameBoard.dimension;
             int y = i % GameBoard.dimension;
             gameField[x][y] = nullSymbol;
@@ -67,7 +66,7 @@ public class GameBoard extends JFrame {
     // Метод проверки доступности клетки для хода
     boolean isTurnable(int x, int y) {
         boolean result = false;
-        if (gameField[x][y] == nullSymbol)
+        if (gameField[y][x] == nullSymbol)
             result = true;
         return result;
     }
@@ -86,15 +85,17 @@ public class GameBoard extends JFrame {
     }
 
     private boolean chexkWinLines(char playerSymbol) {
-        boolean cols = true;
-        boolean rows = true;
-        boolean result = false;
-        for (int i = 0; i < (dimension * dimension); i++) {
 
-            int x = i / GameBoard.dimension;
-            int y = i % GameBoard.dimension;
-            cols &= gameField[x][y] == playerSymbol;
-            rows &= gameField[y][x] == playerSymbol;
+        boolean result = false;
+        for (int x = 0; x < dimension; x++) {
+            boolean cols = true;
+            boolean rows = true;
+            for (int y = 0; y < dimension; y++) {
+
+                cols &= gameField[x][y] == playerSymbol;
+                rows &= gameField[y][x] == playerSymbol;
+
+            }
             if (cols || rows) {
                 result = true;
                 break;
@@ -110,7 +111,7 @@ public class GameBoard extends JFrame {
         for (int i = 0; i < dimension; i++) {
 
             leftRight &= (gameField[i][i] == playerSymbol);
-            rightLeft &= (gameField[i][i] == playerSymbol);
+            rightLeft &= (gameField[i][dimension - 1 - i] == playerSymbol);
         }
         if (leftRight || rightLeft) {
             result = true;

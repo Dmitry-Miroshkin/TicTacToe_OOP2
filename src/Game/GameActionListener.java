@@ -50,14 +50,14 @@ public class GameActionListener implements ActionListener {
         Random rnd = new Random();
 
         do {
-            x = rnd.nextInt(GameBoard.dimension);
+            x = rnd.nextInt(board.dimension);
 
-            y = rnd.nextInt(GameBoard.dimension);
+            y = rnd.nextInt(board.dimension);
         } while (!board.isTurnable(x, y));
 //        Обновить матрицу игры
         board.updateGameField(x,y);
 //        Обновить содержимое кнопки
-        int cellIndex=GameBoard.dimension*x+y;
+        int cellIndex=board.dimension*x+y;
         board.getButton(cellIndex).setText(Character.toString(board.getGame().getCurrentPlayer().getPlayerSign()));
 
         if (board.checkWin()){

@@ -4,9 +4,9 @@ public class GamePlayer {
     private char playerSign;
     private boolean realPlayer = true;
 
-    public GamePlayer(boolean isrealPlayer, char playerSign) {
+    public GamePlayer(boolean isRealPlayer, char playerSign) {
         this.playerSign = playerSign;
-        this.realPlayer = realPlayer;
+        this.realPlayer = isRealPlayer;
     }
 
     public char getPlayerSign() {
