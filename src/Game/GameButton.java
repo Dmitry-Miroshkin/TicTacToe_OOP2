@@ -2,22 +2,20 @@ package Game;
 
 import javax.swing.*;
 
-public class GameButton extends JButton {
-    private int buttonIndex;
+class GameButton extends JButton {
     private GameBoard board;
 
 
-    public GameButton(int gameButtonIndex, GameBoard currentGameBoard) {
-        buttonIndex = gameButtonIndex;
+    GameButton(int gameButtonIndex, GameBoard currentGameBoard) {
         board = currentGameBoard;
 
-        int rowNum = buttonIndex / GameBoard.dimension;
-        int cellNum = buttonIndex % GameBoard.dimension;
+        int rowNum = gameButtonIndex / GameBoard.dimension;
+        int cellNum = gameButtonIndex % GameBoard.dimension;
         setSize(GameBoard.cellSize - 5, GameBoard.cellSize - 5);
         addActionListener(new GameActionListener (rowNum, cellNum, this));
     }
 
-    public GameBoard getBoard() {
+    GameBoard getBoard() {
         return board;
     }
 

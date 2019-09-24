@@ -5,15 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameBoard extends JFrame {
+class GameBoard extends JFrame {
     static int dimension = 3;
     static int cellSize = 150;
     private char[][] gameField;
     private GameButton[] gameButtons;
-    static char nullSymbol = '\u0000';
+    private static char nullSymbol = '\u0000';
     private Game game;
 
-    public GameBoard(Game currentGame) {
+    GameBoard(Game currentGame) {
         this.game = currentGame;
         initField();
     }
@@ -56,6 +56,9 @@ public class GameBoard extends JFrame {
             int x = i / GameBoard.dimension;
             int y = i % GameBoard.dimension;
             gameField[x][y] = nullSymbol;
+        }
+        if (!game.getCurrentPlayer().isRealPlayer()) {
+            game.passTurn();
         }
     }
 
@@ -133,7 +136,7 @@ public class GameBoard extends JFrame {
 
     }
 
-    public GameButton getButton(int buttonIndex) {
+    GameButton getButton(int buttonIndex) {
         return gameButtons[buttonIndex];
     }
 }

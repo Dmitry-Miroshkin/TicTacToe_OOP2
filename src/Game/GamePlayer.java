@@ -1,15 +1,15 @@
 package Game;
 
-public class GamePlayer {
+class GamePlayer {
     private char playerSign;
-    private boolean realPlayer = true;
+    private boolean realPlayer;
 
-    public GamePlayer(boolean isRealPlayer, char playerSign) {
+    GamePlayer(boolean isRealPlayer, char playerSign) {
         this.playerSign = playerSign;
         this.realPlayer = isRealPlayer;
     }
 
-    public char getPlayerSign() {
+    char getPlayerSign() {
         return playerSign;
     }
 
