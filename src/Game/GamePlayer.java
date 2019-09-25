@@ -13,7 +13,7 @@ class GamePlayer {
         return playerSign;
     }
 
-    public boolean isRealPlayer() {
+    boolean isRealPlayer() {
         return realPlayer;
     }
 }

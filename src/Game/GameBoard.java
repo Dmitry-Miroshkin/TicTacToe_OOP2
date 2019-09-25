@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
 class GameBoard extends JFrame {
     static int dimension = 3;
     static int cellSize = 150;
-    private char[][] gameField;
+     char[][] gameField;
     private GameButton[] gameButtons;
-    private static char nullSymbol = '\u0000';
+     static char nullSymbol = '\u0000';
     private Game game;
 
     GameBoard(Game currentGame) {
@@ -87,7 +87,7 @@ class GameBoard extends JFrame {
         return result;
     }
 
-    private boolean chexkWinLines(char playerSymbol) {
+     boolean chexkWinLines(char playerSymbol) {
 
         boolean result = false;
         for (int x = 0; x < dimension; x++) {
@@ -107,7 +107,7 @@ class GameBoard extends JFrame {
         return result;
     }
 
-    private boolean checkWinDiag(char playerSymbol) {
+     boolean checkWinDiag(char playerSymbol) {
         boolean leftRight = true;
         boolean rightLeft = true;
         boolean result = false;

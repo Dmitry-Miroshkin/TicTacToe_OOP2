@@ -32,8 +32,15 @@ public class GameActionListener implements ActionListener {
                 board.getGame().ShowMessage("Ничья!");
                 board.emptyField();
             } else {
-                updateByAiData(board);
-
+                boolean sillyMode = false;
+                if (sillyMode) updateBySillyAiData(board);
+                else updateBySmartAiData(board);
+                if (board.checkWin()) {
+                    button.getBoard().getGame().ShowMessage("Выиграл компьютер!!");
+                    board.emptyField();
+                } else {
+                    board.getGame().passTurn();
+                }
                 if (board.isFull()) {
                     board.getGame().ShowMessage("Ничья!");
                     board.emptyField();
@@ -50,8 +57,8 @@ public class GameActionListener implements ActionListener {
 
     }
 
-    // Ход компьютера
-    private void updateByAiData(GameBoard board) {
+    // Ход глупого компьютера
+    private void updateBySillyAiData(GameBoard board) {
         int x, y;
         Random rnd = new Random();
 
@@ -65,14 +72,50 @@ public class GameActionListener implements ActionListener {
 //        Обновить содержимое кнопки
         int cellIndex = GameBoard.dimension * x + y;
         board.getButton(cellIndex).setText(Character.toString(board.getGame().getCurrentPlayer().getPlayerSign()));
-
-        if (board.checkWin()) {
-            button.getBoard().getGame().ShowMessage("Выиграл компьютер!!");
-            board.emptyField();
-        } else {
-            board.getGame().passTurn();
-        }
     }
+// ход умного Компьютера
+//    логика поиска следующего хода.
+//     сначала ищем вариант выигрышного хода человека и ходим туда
+//    если такого нет, ищем вариант выигрышного хода компьютера и ходим туда
+//    если и такого нет то sillyAi!
+    private void updateBySmartAiData(GameBoard board) {
+        boolean humWin = false;
+        boolean compWin = false;
+        for (int i = 0; i < (GameBoard.dimension * GameBoard.dimension); i++) {
+            int x = i / GameBoard.dimension;
+            int y = i % GameBoard.dimension;
+            if (board.isTurnable(x, y)) {
+                board.gameField[x][y] = 'X';
+                if (board.chexkWinLines('X') || board.checkWinDiag('x')) {
+//                    board.getGame().passTurn();
+                    board.updateGameField(x, y);
+                    int cellIndex = GameBoard.dimension * x + y;
+                    board.getButton(cellIndex).setText(Character.toString(board.getGame().getCurrentPlayer().getPlayerSign()));
+                    humWin = true;
+                    break;
+                }
 
+                board.gameField[x][y] = GameBoard.nullSymbol;
+            }
+        }
+        if (!humWin) {
+            for (int i = 0; i < (GameBoard.dimension * GameBoard.dimension); i++) {
+                int x = i / GameBoard.dimension;
+                int y = i % GameBoard.dimension;
+                if (board.isTurnable(x, y)) {
+                    board.gameField[x][y] = 'O';
+                    if (board.checkWin()) {
+
+                        int cellIndex = GameBoard.dimension * x + y;
+                        board.getButton(cellIndex).setText(Character.toString(board.getGame().getCurrentPlayer().getPlayerSign()));                        compWin = true;
+                        break;
+                    }
+                    board.gameField[x][y] = GameBoard.nullSymbol;
+                }
+            }
+
+        }
+        if (!compWin && !humWin) updateBySillyAiData(board);
+    }
 
 }
