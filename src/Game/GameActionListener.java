@@ -85,17 +85,19 @@ public class GameActionListener implements ActionListener {
             int x = i / GameBoard.dimension;
             int y = i % GameBoard.dimension;
             if (board.isTurnable(x, y)) {
-                board.gameField[x][y] = 'X';
-                if (board.chexkWinLines('X') || board.checkWinDiag('x')) {
+                board.gameField[y][x] = 'X';
+                if (board.checkWinLines('X') || board.checkWinDiag('X')) {
 //                    board.getGame().passTurn();
                     board.updateGameField(x, y);
                     int cellIndex = GameBoard.dimension * x + y;
-                    board.getButton(cellIndex).setText(Character.toString(board.getGame().getCurrentPlayer().getPlayerSign()));
+                    System.out.println("ход : "+(y+1)+" "+(x+1));
+
+                    board.getButton(i).setText(Character.toString(board.getGame().getCurrentPlayer().getPlayerSign()));
                     humWin = true;
                     break;
                 }
 
-                board.gameField[x][y] = GameBoard.nullSymbol;
+                board.gameField[y][x] = GameBoard.nullSymbol;
             }
         }
         if (!humWin) {
@@ -103,19 +105,22 @@ public class GameActionListener implements ActionListener {
                 int x = i / GameBoard.dimension;
                 int y = i % GameBoard.dimension;
                 if (board.isTurnable(x, y)) {
-                    board.gameField[x][y] = 'O';
+                    board.gameField[y][x] = 'O';
                     if (board.checkWin()) {
+                        System.out.println("ход : "+(y+1)+" "+(x+1));
 
                         int cellIndex = GameBoard.dimension * x + y;
-                        board.getButton(cellIndex).setText(Character.toString(board.getGame().getCurrentPlayer().getPlayerSign()));                        compWin = true;
+                        board.getButton(i).setText(Character.toString(board.getGame().getCurrentPlayer().getPlayerSign()));                        compWin = true;
                         break;
                     }
-                    board.gameField[x][y] = GameBoard.nullSymbol;
+                    board.gameField[y][x] = GameBoard.nullSymbol;
+
                 }
             }
 
         }
-        if (!compWin && !humWin) updateBySillyAiData(board);
+        if (!compWin && !humWin) {updateBySillyAiData(board);
+        System.out.println("Silly turn");}
     }
 
 }

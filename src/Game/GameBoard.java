@@ -81,13 +81,13 @@ class GameBoard extends JFrame {
     boolean checkWin() {
         boolean result = false;
         char playerSymbol = game.getCurrentPlayer().getPlayerSign();
-        if (checkWinDiag(playerSymbol) || chexkWinLines(playerSymbol)) {
+        if (checkWinDiag(playerSymbol) || checkWinLines(playerSymbol)) {
             result = true;
         }
         return result;
     }
 
-     boolean chexkWinLines(char playerSymbol) {
+     boolean checkWinLines(char playerSymbol) {
 
         boolean result = false;
         for (int x = 0; x < dimension; x++) {
